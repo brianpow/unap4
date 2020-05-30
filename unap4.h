@@ -1,17 +1,19 @@
+#include "asprintf.h"
+
 typedef struct
 {
-    u_int32_t start;
-    u_int32_t size;
-    u_char EOD;
+    uint32_t start;
+    uint32_t size;
+    unsigned char EOD;
 } __attribute__((packed)) ap4_data_detail_t;
 
 typedef struct
 {
-    u_char start;
-    u_char type;
-    u_int8_t size;
-    u_char type2;
-    u_int8_t size2;
+    unsigned char start;
+    unsigned char type;
+    uint8_t size;
+    unsigned char type2;
+    uint8_t size2;
     ap4_data_detail_t *data;
 } __attribute__((packed)) ap4_data_t;
 
@@ -25,7 +27,7 @@ bool isAllNull(char *buff, size_t size)
     return true;
 }
 
-char *getFilename(const char *filename, char *ext, u_int32_t start, u_int32_t size, int padding)
+char *getFilename(const char *filename, char *ext, uint32_t start, uint32_t size, int padding)
 {
     char *buff, *prefix, *newFilename;
     size_t ssize;
@@ -44,7 +46,7 @@ char *getFilename(const char *filename, char *ext, u_int32_t start, u_int32_t si
 int is_big_endian(void)
 {
     union {
-        u_int32_t i;
+        uint32_t i;
         char c[4];
     } e = {0x01000000};
 

@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
-#include <byteswap.h>
 #include <unistd.h>
 #include <inttypes.h>
 #include "unap4.h"
+#include "byteswap.h"
 
 bool bVerbose = false;
 bool bDryRun = false;
@@ -27,7 +27,7 @@ size_t writeFile(char *name, char *buff, size_t size)
 size_t lookup(FILE *fp, size_t maxPos)
 {
     char *pattern = "\x00\x01";
-    u_int size = 5;
+    uint64_t size = 5;
     char tmp[size];
     size_t pos = ftell(fp);
 
@@ -61,9 +61,9 @@ bool checkFile(const char *filename)
 {
     FILE *fp, *ofp;
     char *outfilename, *buff;
-    u_int32_t indexCount = 0, mp3Count = 0, othersCount = 0;
+    uint32_t indexCount = 0, mp3Count = 0, othersCount = 0;
     size_t bytes = 0, indexPos = 0, fileSize = 0, maxPos = 0;
-    u_int padding = 0;
+    uint64_t padding = 0;
     char tmp, xorKey;
     ap4_data_detail_t *ap4_detail;
 
@@ -81,8 +81,8 @@ bool checkFile(const char *filename)
     fileSize = ftell(fp);
     padding = snprintf(NULL, 0, "%x", fileSize);
     fseek(fp, 0, SEEK_SET);
-    u_char header[5];
-    u_int8_t dataSize;
+    unsigned char header[5];
+    uint8_t dataSize;
     ap4_data_detail_t details;
 
     while (indexPos = lookup(fp, maxPos))
@@ -111,7 +111,7 @@ bool checkFile(const char *filename)
         memcpy(&dataSize, header + 4, 1);
 
         indexPos = ftell(fp);
-        for (u_int8_t j = 0; j < dataSize; j++)
+        for (uint8_t j = 0; j < dataSize; j++)
         {
             fseek(fp, indexPos, SEEK_SET);
             fread(&details, sizeof(ap4_data_detail_t), 1, fp);
