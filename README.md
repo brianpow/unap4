@@ -6,7 +6,7 @@ A utility to unpack MP3 files stored in ap4 file, commonly used in reading pen.
 
 ## Compile ##
 
-`cnake . && make`
+`cmake . && make`
 
 ## Usage ##
 
